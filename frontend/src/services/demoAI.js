@@ -1,0 +1,2 @@
+export const runDemoDetection = () => ({ hazard: 'Pothole', confidence: 0.94, severity: 'High', department: 'Road Maintenance / PWD' });
+export const generateDescription = ({ hazard, severity, latitude, longitude }) => `A ${severity.toLowerCase()}-severity ${hazard.toLowerCase()} was reported near coordinates ${latitude}, ${longitude}. The issue may create a safety risk for road users and requires inspection and appropriate maintenance.`;
