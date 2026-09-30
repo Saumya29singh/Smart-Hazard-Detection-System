@@ -1,26 +1,40 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import Home from './pages/Home';
+import Login from './pages/Login';
 import Sidebar from './components/Sidebar';
 import Dashboard from './pages/Dashboard';
 import ReportIssue from './pages/ReportIssue';
 import MapPage from './pages/Map';
+import GovernmentDashboard from './pages/GovernmentDashboard';
 import { INITIAL_COMPLAINTS } from './services/complaintsStore';
 
 export default function App() {
   const [currentTab, setCurrentTab] = useState('landing');
   const [complaints, setComplaints] = useState(INITIAL_COMPLAINTS);
 
-  const handleAddComplaint = (newComplaint) => {
-    setComplaints([newComplaint, ...complaints]);
-  };
-
   const handleNavigate = (tab) => {
     setCurrentTab(tab);
     window.scrollTo(0, 0);
   };
 
+  const handleLogin = (role) => {
+    handleNavigate(role === 'government' ? 'government' : 'landing');
+  };
+
+  const handleAddComplaint = (newComplaint) => {
+    setComplaints((current) => [newComplaint, ...current]);
+  };
+
   if (currentTab === 'landing') {
     return <Home onNavigate={handleNavigate} />;
+  }
+
+  if (currentTab === 'login') {
+    return <Login onLogin={handleLogin} onNavigate={handleNavigate} />;
+  }
+
+  if (currentTab === 'government') {
+    return <GovernmentDashboard />;
   }
 
   return (
@@ -31,11 +45,12 @@ export default function App() {
           <Dashboard complaints={complaints} onNavigate={handleNavigate} />
         )}
         {currentTab === 'report' && (
-          <ReportIssue onAddComplaint={handleAddComplaint} onNavigate={handleNavigate} />
+          <ReportIssue
+            onAddComplaint={handleAddComplaint}
+            onNavigate={handleNavigate}
+          />
         )}
-        {currentTab === 'map' && (
-          <MapPage />
-        )}
+        {currentTab === 'map' && <MapPage />}
       </div>
     </div>
   );
