@@ -1,18 +1,19 @@
 require("dotenv").config();
+require("./config/database");
 
 const express = require("express");
 const cors = require("cors");
-
 const authRoutes = require("./routes/authRoutes");
-
+const complaintRoutes = require("./routes/complaintRoutes");
+const departmentRoutes = require("./routes/departmentRoutes");
 const app = express();
 
 app.use(cors());
 app.use(express.json());
 
-app.use("/uploads", express.static("uploads"));
-
 app.use("/api/auth", authRoutes);
+app.use("/api/complaints", complaintRoutes);
+app.use("/api/departments", departmentRoutes);
 
 app.get("/", (req, res) => {
     res.json({

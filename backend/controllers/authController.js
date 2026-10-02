@@ -1,5 +1,5 @@
-const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
+const bcrypt = require("bcryptjs");
 const db = require("../config/database");
 
 const register = async (req, res) => {
@@ -23,6 +23,7 @@ const register = async (req, res) => {
             sql,
             [name, email, hashedPassword],
             (err, result) => {
+
                 if (err) {
                     if (err.code === "ER_DUP_ENTRY") {
                         return res.status(400).json({
